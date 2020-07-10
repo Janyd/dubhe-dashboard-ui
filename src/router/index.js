@@ -53,6 +53,17 @@ export const constantRoutes = [
             meta     : { title: 'Dashboard', icon: 'dashboard' }
         }]
     },
+    {
+        path     : '/repository',
+        component: Layout,
+        redirect : '/repository/list',
+        children : [{
+            path     : 'list',
+            name     : '仓储库',
+            component: () => import('@/views/repository/index'),
+            meta     : { title: '仓储库', icon: 'tree' }
+        }]
+    },
     // 404 page must be placed at the end !!!
     { path: '*', redirect: '/404', hidden: true }
 ]

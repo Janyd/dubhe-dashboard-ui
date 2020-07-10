@@ -63,3 +63,78 @@ div:focus {
 .app-container {
   padding: 20px;
 }
+
+
+//Dialog改造
+.custom-dialog {
+    .dialog_editer_body {
+        height           : 100%;
+        overflow-y       : auto;
+        margin           : -20px !important;
+        padding          : 20px;
+        background-color : #f7f7f7;
+    }
+
+    .el-dialog {
+        height    : 100% !important;
+        margin    : 0 !important;
+        position  : fixed !important;
+        top       : 0 !important;
+        right     : 0 !important;
+        left      : auto !important;
+        transform : none !important;
+
+        .el-dialog__header {
+            position       : absolute;
+            width          : 100%;
+            top            : 0;
+            right          : 0;
+            box-sizing     : border-box;
+            padding-bottom : 16px;
+            padding-top    : 16px;
+            border-bottom  : 1px solid #ccc;
+            z-index        : 99;
+            line-height    : 28px;
+            height         : 61px;
+
+            .el-dialog__title {
+                line-height : 28px;
+            }
+        }
+
+        .el-dialog__body {
+            border-top    : 60px solid #fff;
+            border-bottom : 71px solid #fff;
+            padding       : 20px;
+            height        : 100%;
+            box-sizing    : border-box;
+            overflow      : auto;
+            position      : relative;
+            z-index       : 80;
+        }
+
+        .el-dialog__footer {
+            position   : absolute;
+            z-index    : 99;
+            width      : 100%;
+            bottom     : 0;
+            right      : 0;
+            box-sizing : border-box;
+            border-top : 1px solid #ccc;
+            padding    : 15px 20px;
+
+            .el-pagination {
+                padding : 4px 0;
+            }
+
+            .left-text {
+                line-height : 36px;
+                float       : left;
+            }
+
+            .el-form-item {
+                margin-bottom : 0 !important;
+            }
+        }
+    }
+}

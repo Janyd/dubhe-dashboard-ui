@@ -10,7 +10,7 @@ const tokens = {
 const users = {
     'admin-token' : {
         roles       : ['admin'],
-        introduction: 'I am a super administrator',
+        introduction: 'I am a super administrator1111111111',
         avatar      : 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif',
         name        : 'Super Admin'
     },
@@ -40,7 +40,7 @@ module.exports = [
             }
 
             return {
-                code: 20000,
+                code: 200000,
                 data: token
             }
         }
@@ -63,7 +63,7 @@ module.exports = [
             }
 
             return {
-                code: 20000,
+                code: 200000,
                 data: info
             }
         }
@@ -75,7 +75,7 @@ module.exports = [
         type    : 'post',
         response: _ => {
             return {
-                code: 20000,
+                code: 200000,
                 data: 'success'
             }
         }

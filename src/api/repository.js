@@ -4,6 +4,6 @@ export function Repositories(page) {
     return request({
         url   : '/repo/list',
         method: 'post',
-        params: page
+        data  : page
     })
 }
