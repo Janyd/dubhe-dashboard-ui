@@ -2,7 +2,7 @@
     <div class="app-container">
         <el-row>
             <el-col :span="24">
-                <el-button class="btn-right" type="primary" icon="el-icon-plus" size="mini" @click="editVisible = true">
+                <el-button class="btn-right" type="primary" icon="el-icon-plus" size="mini" @click="createRepo">
                     添加
                 </el-button>
                 <el-button class="btn-right" icon="el-icon-refresh" size="mini" @click="fetchRepositories" />
@@ -19,7 +19,11 @@
                     fit
                     highlight-current-row
                 >
-                    <el-table-column align="left" prop="name" label="名称" min-width="150" />
+                    <el-table-column align="left" prop="name" label="名称" min-width="150">
+                        <template slot-scope="scope">
+                            <el-link type="primary" @click="detail(scope.row.id)">{{ scope.row.name }}</el-link>
+                        </template>
+                    </el-table-column>
                     <el-table-column align="left" prop="description" label="描述" min-width="300" />
                     <el-table-column align="center" label="状态" width="80">
                         <template slot-scope="scope">
@@ -31,7 +35,12 @@
                     <el-table-column align="center" prop="createdAt" label="创建时间" width="200">
                         <template slot-scope="scope">
                             <i class="el-icon-time" />
-                            <span style="margin-left: 10px">{{ scope.row.createdAt | toDate }}</span>
+                            <span style="margin-left: 10px">{{ scope.row.createdAt | convertTime }}</span>
+                        </template>
+                    </el-table-column>
+                    <el-table-column label="操作">
+                        <template slot-scope="scope">
+                            <el-button type="danger" size="mini" @click="del(scope.row.id)">删除</el-button>
                         </template>
                     </el-table-column>
                 </el-table>
@@ -49,30 +58,15 @@
                 />
             </el-col>
         </el-row>
-        <el-dialog
-            class="custom-dialog"
-            :title="isCreate? '添加项目' : '修改项目'"
-            :visible.sync="editVisible"
-            width="700px"
-        >
-            <form-create v-model="form" :rule="rule" :option="option"></form-create>
-        </el-dialog>
     </div>
 </template>
 
 <script>
 
-    import { Repositories } from "@/api/repository"
-    import { formatDate } from "@/utils/date"
+    import { DelRepository, Repositories } from "@/api/repository"
 
     export default {
         name   : "Repository",
-        filters: {
-            toDate(time) {
-                time = time * 1000
-                return formatDate(new Date(time), 'yyyy-MM-dd hh:mm:ss')
-            }
-        },
         data() {
             return {
                 loading     : false,
@@ -80,8 +74,6 @@
                 size        : 10,
                 total       : 0,
                 repositories: [],
-                isCreate    : true,
-                editVisible : false,
                 form        : {},
                 rule        : [
                     {
@@ -130,6 +122,22 @@
                     this.loading = false
                     this.repositories = resp.data.repos
                     this.total = resp.data.page.total
+                })
+            },
+            detail(repoId) {
+                this.$router.push({ name: 'repository-edit', params: { repoId: repoId } })
+            },
+            createRepo() {
+                this.$router.push({ name: 'repository-edit' })
+            },
+            del(repoId) {
+                DelRepository(repoId).then(res => {
+                    this.$message({
+                        message : '删除成功',
+                        type    : 'success',
+                        duration: 3 * 1000
+                    })
+                    this.fetchRepositories()
                 })
             }
         }

@@ -33,5 +33,65 @@ module.exports = [
                 "secondMsg": ""
             }
         }
+    },
+    {
+        url     : '/repo',
+        type    : 'post',
+        response: (req, res) => {
+            return {
+                "code"     : 200000,
+                "data"     : null,
+                "msg"      : "操作成功",
+                "secondMsg": ""
+            }
+        }
+    },
+    {
+        url     : '/repo/\\d+',
+        type    : 'get',
+        response: (req, res) => {
+            return {
+                "code"     : 200000,
+                "data"     : {
+                    "id"          : "@id",
+                    "name"        : "@word(10, 20)",
+                    "description" : "@sentence(1, 10)",
+                    "url"         : "@url",
+                    "credentialId": "@id",
+                    "active|1"    : '@boolean',
+                    "timeout"     : '@integer(1, 10)',
+                    "createdAt"   : '@integer(946656000, 1594396800)',
+                    "updatedAt"   : '@integer(946656000, 1594396800)'
+                },
+                "msg"      : "失败！",
+                "secondMsg": ""
+            }
+        }
+    },
+    {
+        url     : '/repo/\\d+',
+        type    : 'delete',
+        response: (req, res) => {
+            return {
+                "code"     : 200000,
+                "data"     : null,
+                "msg"      : "操作成功",
+                "secondMsg": ""
+            }
+        }
+    },
+    {
+        url     : '/repo',
+        type    : 'put',
+        response: (req, res) => {
+            console.log(req.body)
+
+            return {
+                "code"     : 200000,
+                "data"     : null,
+                "msg"      : "操作成功",
+                "secondMsg": ""
+            }
+        }
     }
 ]

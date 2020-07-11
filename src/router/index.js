@@ -57,12 +57,33 @@ export const constantRoutes = [
         path     : '/repository',
         component: Layout,
         redirect : '/repository/list',
-        children : [{
-            path     : 'list',
-            name     : '仓储库',
-            component: () => import('@/views/repository/index'),
-            meta     : { title: '仓储库', icon: 'tree' }
-        }]
+        children : [
+            {
+                path     : 'list',
+                name     : 'repositories',
+                component: () => import('@/views/repository/index'),
+                meta     : { title: '仓储库', icon: 'tree' }
+            }, {
+                path     : 'edit',
+                name     : 'repository-edit',
+                component: () => import('@/views/repository/edit'),
+                meta     : { title: '仓储库编辑' },
+                hidden   : true
+            }
+        ]
+    },
+    {
+        path     : '/credentials',
+        component: Layout,
+        redirect : '/credentials/list',
+        children : [
+            {
+                path     : 'list',
+                name     : 'credentials',
+                component: () => import('@/views/credential/index'),
+                meta     : { title: '凭据', icon: 'tree' }
+            }
+        ]
     },
     // 404 page must be placed at the end !!!
     { path: '*', redirect: '/404', hidden: true }
