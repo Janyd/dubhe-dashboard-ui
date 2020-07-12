@@ -63,7 +63,7 @@ module.exports = [
                     "createdAt"   : '@integer(946656000, 1594396800)',
                     "updatedAt"   : '@integer(946656000, 1594396800)'
                 },
-                "msg"      : "失败！",
+                "msg"      : "操作",
                 "secondMsg": ""
             }
         }
@@ -84,8 +84,31 @@ module.exports = [
         url     : '/repo',
         type    : 'put',
         response: (req, res) => {
-            console.log(req.body)
 
+            return {
+                "code"     : 200000,
+                "data"     : null,
+                "msg"      : "操作成功",
+                "secondMsg": ""
+            }
+        }
+    },
+    {
+        url     : '/repo/scan/\\d+',
+        method  : 'put',
+        response: (req, res) => {
+            return {
+                "code"     : 200000,
+                "data"     : null,
+                "msg"      : "操作成功",
+                "secondMsg": ""
+            }
+        }
+    },
+    {
+        url     : '/repo/build/\\d+/\\d+',
+        method  : 'put',
+        response: (req, res) => {
             return {
                 "code"     : 200000,
                 "data"     : null,

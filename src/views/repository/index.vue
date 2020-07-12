@@ -40,6 +40,7 @@
                     </el-table-column>
                     <el-table-column label="操作">
                         <template slot-scope="scope">
+                            <el-button type="warning" size="mini" @click="edit(scope.row.id)">编辑</el-button>
                             <el-button type="danger" size="mini" @click="del(scope.row.id)">删除</el-button>
                         </template>
                     </el-table-column>
@@ -124,7 +125,7 @@
                     this.total = resp.data.page.total
                 })
             },
-            detail(repoId) {
+            edit(repoId) {
                 this.$router.push({ name: 'repository-edit', params: { repoId: repoId } })
             },
             createRepo() {
@@ -139,6 +140,9 @@
                     })
                     this.fetchRepositories()
                 })
+            },
+            detail(repoId) {
+                this.$router.push({ name: 'branches', params: { repoId: repoId } })
             }
         }
     }

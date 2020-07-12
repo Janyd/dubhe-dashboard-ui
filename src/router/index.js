@@ -63,13 +63,29 @@ export const constantRoutes = [
                 name     : 'repositories',
                 component: () => import('@/views/repository/index'),
                 meta     : { title: '仓储库', icon: 'tree' }
-            }, {
+            },
+            {
                 path     : 'edit',
                 name     : 'repository-edit',
                 component: () => import('@/views/repository/edit'),
                 meta     : { title: '仓储库编辑' },
                 hidden   : true
+            },
+            {
+                path     : 'branches',
+                name     : 'branches',
+                component: () => import('@/views/repository/branches'),
+                meta     : { title: '分支流水线' },
+                hidden   : true
+            },
+            {
+                path     : 'build',
+                name     : 'build',
+                component: () => import('@/views/repository/build'),
+                meta     : { title: '流水线构建' },
+                hidden   : true
             }
+
         ]
     },
     {

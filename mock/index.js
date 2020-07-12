@@ -5,12 +5,14 @@ const user = require('./user')
 const table = require('./table')
 const repository = require('./repository')
 const credential = require('./credential')
+const branches = require('./branches')
 
 const mocks = [
     ...user,
     ...table,
     ...repository,
-    ...credential
+    ...credential,
+    ...branches
 ]
 
 // for front mock

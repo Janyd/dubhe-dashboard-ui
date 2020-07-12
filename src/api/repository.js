@@ -37,3 +37,17 @@ export function DelRepository(repoId) {
         method: 'delete'
     })
 }
+
+export function ScanRepository(repoId) {
+    return request({
+        url   : `/repo/scan/${repoId}`,
+        method: 'put'
+    })
+}
+
+export function BuildNow(repoId, branchId) {
+    return request({
+        url   : `/repo/build/${repoId}/${branchId}`,
+        method: 'put'
+    })
+}

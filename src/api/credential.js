@@ -2,16 +2,22 @@ import request from '@/utils/request'
 
 export function Credential() {
     return request({
-        url   : '/cred',
+        url   : '/cred/list',
         method: 'get'
     })
 }
 
 export function AddCredential(data) {
     return request({
-        url   : '/cred',
+        url   : '/cred/add',
         method: 'post',
-        data
+        data  : data
     })
 }
 
+export function RandRsa() {
+    return request({
+        url   : '/cred/rand',
+        method: 'get'
+    })
+}

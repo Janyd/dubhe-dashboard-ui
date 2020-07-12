@@ -106,7 +106,6 @@
             if (repoId) {
                 FindRepository(repoId).then(res => {
                     self.fApi.setValue(res.data)
-                    console.log(res)
                 })
             } else {
                 this.create = true

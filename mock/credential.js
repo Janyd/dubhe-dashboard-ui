@@ -1,6 +1,6 @@
 module.exports = [
     {
-        url     : '/cred',
+        url     : '/cred/list',
         type    : 'get',
         response: (req, res) => {
             return {
@@ -19,7 +19,7 @@ module.exports = [
                 }, {
                     "id"            : "100001",
                     "name"          : "gitee code",
-                    "credentialType": 1,
+                    "credentialType": 2,
                     "url"           : "@url",
                     "username"      : "@word",
                     "password"      : '@word',
@@ -39,6 +39,33 @@ module.exports = [
                     "createdAt"     : '@integer(946656000, 1594396800)',
                     "updatedAt"     : '@integer(946656000, 1594396800)'
                 }],
+                "msg"      : "操作成功",
+                "secondMsg": ""
+            }
+        }
+    },
+    {
+        url     : '/cred/add',
+        type    : 'post',
+        response: (req, res) => {
+            return {
+                "code"     : 200000,
+                "data"     : null,
+                "msg"      : "操作成功",
+                "secondMsg": ""
+            }
+        }
+    },
+    {
+        url     : '/cred/rand',
+        type    : 'get',
+        response: (req, res) => {
+            return {
+                "code"     : 200000,
+                "data"     : {
+                    "publicKey" : "@word",
+                    "privateKey": "@word"
+                },
                 "msg"      : "操作成功",
                 "secondMsg": ""
             }
