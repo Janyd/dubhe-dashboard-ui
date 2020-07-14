@@ -6,13 +6,15 @@ const table = require('./table')
 const repository = require('./repository')
 const credential = require('./credential')
 const branches = require('./branches')
+const build = require('./build')
 
 const mocks = [
     ...user,
     ...table,
     ...repository,
     ...credential,
-    ...branches
+    ...branches,
+    ...build
 ]
 
 // for front mock

@@ -6,30 +6,116 @@
                 <el-button class="btn-right" type="success" plain icon="el-icon-caret-right" size="small">
                     立即构建
                 </el-button>
+                <el-button class="btn-right" icon="el-icon-refresh" size="small" @click="fetchBuilds">
+                    刷新
+                </el-button>
             </el-col>
         </el-row>
         <el-row>
             <el-col :span="24">
                 <el-table
+                    ref="buildTable"
                     v-loading="loading"
                     element-loading-text="Loading"
-                    :data="branches"
+                    :data="builds"
                     size="mini"
                     fit
                     highlight-current-row
+                    row-key="id"
+                    :expand-row-keys="expands"
+                    @expand-change="handleClick"
                 >
-                    <el-table-column align="left" prop="name" label="构建版本">
+                    <el-table-column type="expand">
                         <template slot-scope="scope">
-                            <el-link type="primary">{{ scope.row.Number }}</el-link>
+                            <el-tabs tab-position="left">
+                                <el-tab-pane
+                                    v-for="step in scope.row.steps"
+                                    :key="step.id"
+                                    :lazy="true"
+                                >
+                                    <el-tag v-if="step.status === 'success'" slot="label" size="mini" type="success">
+                                        步骤{{ step.number }}
+                                    </el-tag>
+                                    <el-tag v-if="step.status === 'failure'" slot="label" size="mini" type="danger">步骤{{
+                                        step.number }}
+                                    </el-tag>
+                                    <el-tag v-if="step.status === 'killed'" slot="label" size="mini" type="info">步骤{{
+                                        step.number }}
+                                    </el-tag>
+                                    <el-tag
+                                        v-if="step.status === 'pending'"
+                                        slot="label"
+                                        size="mini"
+                                        effect="plain"
+                                        type="info"
+                                    >步骤{{ step.number }}
+                                    </el-tag>
+                                    <el-tag
+                                        v-if="step.status === 'blocked'"
+                                        slot="label"
+                                        size="mini"
+                                        effect="plain"
+                                        type="warning"
+                                    >步骤{{ step.number }}
+                                    </el-tag>
+                                    <el-tag
+                                        v-if="step.status === 'running'"
+                                        slot="label"
+                                        size="mini"
+                                        effect="plain"
+                                        type="success"
+                                    >
+                                        步骤{{ step.number }}
+                                    </el-tag>
+                                    <el-tag
+                                        v-if="step.status === 'error'"
+                                        slot="label"
+                                        size="mini"
+                                        effect="dark"
+                                        type="danger"
+                                    >步骤{{ step.number }}
+                                    </el-tag>
+                                    <el-tag
+                                        v-if="step.status === 'skipped'"
+                                        slot="label"
+                                        size="mini"
+                                        effect="dark"
+                                        type="info"
+                                    >步骤{{ step.number }}
+                                    </el-tag>
+                                    {{ step.name }}
+                                </el-tab-pane>
+                            </el-tabs>
                         </template>
                     </el-table-column>
-                    <el-table-column align="center" prop="status" label="状态" />
+                    <el-table-column align="left" prop="name" label="构建版本" width="150">
+                        <template slot-scope="scope">
+                            <el-link type="primary"># {{ scope.row.number }}</el-link>
+                        </template>
+                    </el-table-column>
+                    <el-table-column align="center" label="状态">
+                        <template slot-scope="scope">
+                            <el-tag v-if="scope.row.status === 'success'" size="mini" type="success">成功</el-tag>
+                            <el-tag v-if="scope.row.status === 'failure'" size="mini" type="danger">失败</el-tag>
+                            <el-tag v-if="scope.row.status === 'killed'" size="mini" type="info">中断</el-tag>
+                            <el-tag v-if="scope.row.status === 'pending'" size="mini" effect="plain" type="info">等待
+                            </el-tag>
+                            <el-tag v-if="scope.row.status === 'blocked'" size="mini" effect="plain" type="warning">阻塞
+                            </el-tag>
+                            <el-tag v-if="scope.row.status === 'running'" size="mini" effect="plain" type="success">
+                                构建中
+                            </el-tag>
+                            <el-tag v-if="scope.row.status === 'error'" size="mini" effect="dark" type="danger">错误
+                            </el-tag>
+                            <el-tag v-if="scope.row.status === 'skipped'" size="mini" effect="dark" type="info">跳过
+                            </el-tag>
+                        </template>
+                    </el-table-column>
                     <el-table-column align="center" prop="trigger" label="触发原因" />
-                    <el-table-column align="center" prop="trigger" label="触发事件" />
+                    <el-table-column align="center" prop="event" label="触发事件" />
                     <el-table-column align="center" prop="createdAt" label="构建时长">
                         <template slot-scope="scope">
-                            <i class="el-icon-time" />
-                            <span style="margin-left: 10px">{{ scope.row.started }}</span>
+                            <span style="margin-left: 10px">{{ scope.row.startedAt }}</span>
                         </template>
                     </el-table-column>
                     <el-table-column align="center" prop="createdAt" label="创建时间">
@@ -41,29 +127,70 @@
                 </el-table>
             </el-col>
         </el-row>
+        <el-row>
+            <el-col :span="24">
+                <el-pagination
+                    style="float: right;"
+                    small
+                    layout="prev, pager, next"
+                    :total="total"
+                    :page-size="size"
+                    @current-change="fetchBuilds"
+                />
+            </el-col>
+        </el-row>
     </div>
 </template>
 
 <script>
+
+    import { Builds } from "@/api/build"
+
     export default {
         name   : "Build",
         data() {
             return {
                 repoId  : '',
-                branchId: ''
+                branchId: '',
+                loading : false,
+                builds  : [],
+                total   : 0,
+                size    : 10,
+                current : 1,
+                expands : []
             }
         },
         created() {
             const repoId = this.$route.params.repoId
-            if (repoId) {
-                this.repoId = repoId
-            } else {
+            if (!repoId) {
                 this.$router.push({ path: '/404' })
+                return
             }
+            this.repoId = repoId
+            this.branchId = this.$route.params.branchId
+            this.fetchBuilds()
         },
         methods: {
+            fetchBuilds() {
+                this.loading = true
+                const page = {
+                    current: this.current,
+                    size   : this.size
+                }
+                Builds(this.repoId, this.branchId, page).then(resp => {
+                    this.loading = false
+                    this.builds = resp.data.builds
+                    this.total = resp.data.page.total
+                })
+            },
             back() {
                 this.$router.push({ name: 'branches', params: { repoId: this.repoId } })
+            },
+            handleClick(row, expandedRows) {
+                this.expands = []
+                if (expandedRows.length > 0) {
+                    row ? this.expands.push(row.id) : ''
+                }
             }
         }
     }

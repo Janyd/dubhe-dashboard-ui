@@ -84,7 +84,8 @@
         data() {
             return {
                 repoId  : '',
-                branches: []
+                branches: [],
+                loading : false
             }
         },
         created() {
@@ -98,8 +99,11 @@
         },
         methods: {
             fetchBranches() {
+                this.loading = true
                 Branches(this.repoId).then(res => {
                     this.branches = res.data
+                }).finally(() => {
+                    this.loading = false
                 })
             },
             back() {
