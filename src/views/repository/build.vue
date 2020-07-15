@@ -30,7 +30,7 @@
                 >
                     <el-table-column align="left" prop="name" label="构建版本" width="150">
                         <template slot-scope="scope">
-                            <el-link type="primary" @click="step(scope.row.id)" ># {{ scope.row.number }}</el-link>
+                            <el-link type="primary" @click="step(scope.row.id)"># {{ scope.row.number }}</el-link>
                         </template>
                     </el-table-column>
                     <el-table-column align="center" label="状态">
@@ -139,7 +139,7 @@
                     name: 'step', params: {
                         repoId  : this.repoId,
                         branchId: this.branchId,
-                        buildI  : buildId
+                        buildId : buildId
                     }
                 })
             }

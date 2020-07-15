@@ -7,12 +7,14 @@ import '@/styles/index.scss' // global css
 import App from './App'
 import store from './store'
 import router from './router'
+import VueHighlightJS from 'vue-highlightjs'
 
 import '@/icons' // icon
 import '@/permission' // permission control
 import formCreate from "@form-create/element-ui"
 import '@/utils/filter'
 import '@/components/index'
+import 'highlight.js/styles/atom-one-dark.css'
 
 /**
  * If you don't want to use mock-server
@@ -32,6 +34,7 @@ if (process.env.NODE_ENV === 'production') {
 // 如果想要中文版 element-ui，按如下方式声明
 Vue.use(ElementUI)
 Vue.use(formCreate)
+Vue.use(VueHighlightJS)
 
 Vue.config.productionTip = false
 

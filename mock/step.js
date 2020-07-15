@@ -1,7 +1,7 @@
 module.exports = [
     {
-        url     : '/build/list/\\d+/\\d+',
-        type    : 'post',
+        url     : '/step/\\d+',
+        type    : 'get',
         response: (req, res) => {
             return {
                 "code"     : 200000,
@@ -14,6 +14,21 @@ module.exports = [
                     "finishedAt": '@integer(946656000, 1594396800)',
                     "createdAt" : '@integer(946656000, 1594396800)',
                     "updatedAt" : '@integer(946656000, 1594396800)'
+                }],
+                "msg"      : "操作成功",
+                "secondMsg": ""
+            }
+        }
+    },
+    {
+        url     : '/step/log/\\d+/\\d+',
+        type    : 'post',
+        response: (req, res) => {
+            return {
+                "code"     : 200000,
+                "data|1-3": [{
+                    "time": "@now()",
+                    "log" : "@paragraph"
                 }],
                 "msg"      : "操作成功",
                 "secondMsg": ""
