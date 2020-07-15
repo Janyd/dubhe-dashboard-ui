@@ -2,13 +2,16 @@
     <div class="app-container">
         <el-row>
             <el-col :span="24">
-                <el-button size="small" plain @click="back">返回</el-button>
-                <el-button class="btn-right" icon="el-icon-refresh" size="small" @click="fetchBranches">
-                    刷新
-                </el-button>
-                <el-button class="btn-right" plain icon="el-icon-caret-right" size="small" @click="scan">
-                    立即扫描
-                </el-button>
+                <page-header @back="back">
+                    <div slot="content">
+                        <el-button plain type="success" icon="el-icon-caret-right" size="small" @click="scan">
+                            立即扫描
+                        </el-button>
+                        <el-button icon="el-icon-refresh" size="small" @click="fetchBranches">
+                            刷新
+                        </el-button>
+                    </div>
+                </page-header>
             </el-col>
         </el-row>
         <el-row>
@@ -78,9 +81,11 @@
 
     import { Branches } from "@/api/branches"
     import { BuildNow, ScanRepository } from "@/api/repository"
+    import PageHeader from "@/components/PageHeader/index"
 
     export default {
         name   : "Branches",
+        components: { PageHeader },
         data() {
             return {
                 repoId  : '',
@@ -147,4 +152,5 @@
         margin-left: 10px;
         float: right;
     }
+
 </style>

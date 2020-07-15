@@ -7,6 +7,7 @@ const repository = require('./repository')
 const credential = require('./credential')
 const branches = require('./branches')
 const build = require('./build')
+const step = require('./step')
 
 const mocks = [
     ...user,
@@ -14,7 +15,8 @@ const mocks = [
     ...repository,
     ...credential,
     ...branches,
-    ...build
+    ...build,
+    ...step
 ]
 
 // for front mock

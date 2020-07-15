@@ -2,7 +2,7 @@
     <div class="app-container">
         <el-row style="margin-bottom: 20px;">
             <el-col :span="24">
-                <el-button size="small" plain @click="back">返回</el-button>
+                <page-header sub-title="仓储库编辑" @back="back" />
             </el-col>
         </el-row>
         <el-row>

@@ -12,6 +12,7 @@ import '@/icons' // icon
 import '@/permission' // permission control
 import formCreate from "@form-create/element-ui"
 import '@/utils/filter'
+import '@/components/index'
 
 /**
  * If you don't want to use mock-server

@@ -84,6 +84,13 @@ export const constantRoutes = [
                 component: () => import('@/views/repository/build'),
                 meta     : { title: '流水线构建' },
                 hidden   : true
+            },
+            {
+                path     : 'step',
+                name     : 'step',
+                component: () => import('@/views/repository/step'),
+                meta     : { title: '构建步骤' },
+                hidden   : true
             }
 
         ]

@@ -31,14 +31,14 @@
                             <el-tag v-if="!scope.row.active" size="mini" type="danger">禁用</el-tag>
                         </template>
                     </el-table-column>
-                    <el-table-column align="center" prop="timeout" label="超时(分钟)" width="80" />
+                    <el-table-column align="center" prop="timeout" label="超时(分钟)" min-width="80" />
                     <el-table-column align="center" prop="createdAt" label="创建时间" width="200">
                         <template slot-scope="scope">
                             <i class="el-icon-time" />
                             <span style="margin-left: 10px">{{ scope.row.createdAt | convertTime }}</span>
                         </template>
                     </el-table-column>
-                    <el-table-column label="操作">
+                    <el-table-column label="操作" min-width="120">
                         <template slot-scope="scope">
                             <el-button type="warning" size="mini" @click="edit(scope.row.id)">编辑</el-button>
                             <el-button type="danger" size="mini" @click="del(scope.row.id)">删除</el-button>
