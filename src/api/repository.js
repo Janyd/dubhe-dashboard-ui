@@ -41,7 +41,7 @@ export function DelRepository(repoId) {
 export function ScanRepository(repoId) {
     return request({
         url   : `/repo/scan/${repoId}`,
-        method: 'put'
+        method: 'post'
     })
 }
 

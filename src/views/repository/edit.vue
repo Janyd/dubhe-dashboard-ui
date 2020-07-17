@@ -29,6 +29,10 @@
                 fApi  : {},
                 rule  : [
                     {
+                        type : "hidden",
+                        field: "id"
+                    },
+                    {
                         type    : 'input',
                         field   : 'name',
                         title   : '名称',

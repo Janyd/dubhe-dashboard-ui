@@ -5,6 +5,7 @@
                 <el-button class="btn-right" type="primary" icon="el-icon-plus" size="mini" @click="openCreateCred">
                     添加
                 </el-button>
+                <el-button class="btn-right" icon="el-icon-refresh" size="mini" @click="fetchCredentials" />
             </el-col>
         </el-row>
         <el-row>
@@ -62,7 +63,7 @@
 </template>
 
 <script>
-    import { AddCredential, Credential, RandRsa } from "@/api/credential"
+    import { AddCredential, Credential, DelCredential, RandRsa } from "@/api/credential"
 
     export default {
         name   : "Credential",
@@ -206,6 +207,8 @@
                             type    : 'success',
                             duration: 5 * 1000
                         })
+                        this.fetchCredentials()
+                    }).finally(() => {
                         this.visible = false
                     })
                 })
@@ -217,7 +220,14 @@
                 })
             },
             del(credId) {
-                console.log(credId)
+                DelCredential(credId).then(res => {
+                    this.$message({
+                        message : '删除成功',
+                        type    : 'success',
+                        duration: 3 * 1000
+                    })
+                    this.fetchCredentials()
+                })
             },
             randRsa() {
                 RandRsa().then(res => {
@@ -238,5 +248,10 @@
         &:last-child {
             margin-bottom: 0;
         }
+    }
+
+    .btn-right {
+        margin-left: 10px;
+        float: right;
     }
 </style>

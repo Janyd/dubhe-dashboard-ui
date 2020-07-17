@@ -1,6 +1,6 @@
 module.exports = [
     {
-        url     : '/cred/list',
+        url     : '/cred',
         type    : 'get',
         response: (req, res) => {
             return {
@@ -45,7 +45,7 @@ module.exports = [
         }
     },
     {
-        url     : '/cred/add',
+        url     : '/cred',
         type    : 'post',
         response: (req, res) => {
             return {
