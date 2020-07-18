@@ -68,6 +68,17 @@
                         title  : '凭据',
                         options: []
                     }, {
+                        type    : 'input',
+                        field   : 'config',
+                        title   : '配置文件路径',
+                        value   : '.dubhe.yml',
+                        validate: [
+                            { required: true, message: '请输入URL', trigger: 'blur' }
+                        ],
+                        props   : {
+                            placeholder: '.dubhe.yml'
+                        }
+                    }, {
                         type : 'InputNumber',
                         field: 'timeout',
                         title: '超时时间(分钟, 0不限)',

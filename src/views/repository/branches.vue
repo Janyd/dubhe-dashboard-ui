@@ -35,19 +35,19 @@
                             <el-tag v-if="!scope.row.active" size="mini" type="danger">不存在</el-tag>
                         </template>
                     </el-table-column>
-                    <el-table-column align="center" prop="createdAt" label="上次成功构建">
+                    <el-table-column align="center" label="上次成功构建">
                         <template slot-scope="scope">
                             <i class="el-icon-time" />
                             <span style="margin-left: 10px">{{ scope.row.lastSuccessAt | convertTime }}</span>
                         </template>
                     </el-table-column>
-                    <el-table-column align="center" prop="createdAt" label="上次失败构建">
+                    <el-table-column align="center" label="上次失败构建">
                         <template slot-scope="scope">
                             <i class="el-icon-time" />
                             <span style="margin-left: 10px">{{ scope.row.lastFailureAt | convertTime }}</span>
                         </template>
                     </el-table-column>
-                    <el-table-column align="center" prop="createdAt" label="上次构建时长">
+                    <el-table-column align="center" label="上次构建时长">
                         <template slot-scope="scope">
                             <i class="el-icon-time" />
                             <span style="margin-left: 10px">{{ scope.row.lastDuration }}</span>

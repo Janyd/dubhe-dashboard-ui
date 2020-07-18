@@ -48,6 +48,6 @@ export function ScanRepository(repoId) {
 export function BuildNow(repoId, branchId) {
     return request({
         url   : `/repo/build/${repoId}/${branchId}`,
-        method: 'put'
+        method: 'post'
     })
 }

@@ -4,7 +4,8 @@
             <el-col :span="24">
                 <page-header title="流水线分支" @back="back">
                     <div slot="content">
-                        <el-button class="btn-right" type="success" plain icon="el-icon-caret-right" size="small">
+                        <el-button class="btn-right" type="success" plain icon="el-icon-caret-right" @click="build"
+                                   size="small">
                             立即构建
                         </el-button>
                         <el-button class="btn-right" icon="el-icon-refresh" size="small" @click="fetchBuilds">
@@ -55,13 +56,18 @@
                     <el-table-column align="center" prop="event" label="触发事件" />
                     <el-table-column align="center" prop="createdAt" label="构建时长">
                         <template slot-scope="scope">
-                            <span style="margin-left: 10px">{{ scope.row.startedAt }}</span>
+                            <span style="margin-left: 10px">{{ scope.row.finishedAt - scope.row.startedAt }}</span>
                         </template>
                     </el-table-column>
                     <el-table-column align="center" prop="createdAt" label="创建时间">
                         <template slot-scope="scope">
                             <i class="el-icon-time" />
                             <span style="margin-left: 10px">{{ scope.row.createdAt | convertTime }}</span>
+                        </template>
+                    </el-table-column>
+                    <el-table-column label="操作" min-width="120">
+                        <template slot-scope="scope">
+                            <el-button type="danger" size="mini" @click="del(scope.row.id)">删除</el-button>
                         </template>
                     </el-table-column>
                 </el-table>
@@ -75,6 +81,7 @@
                     layout="prev, pager, next"
                     :total="total"
                     :page-size="size"
+                    :current-page.sync="current"
                     @current-change="fetchBuilds"
                 />
             </el-col>
@@ -84,8 +91,9 @@
 
 <script>
 
-    import { Builds } from "@/api/build"
+    import { Builds, DeleteBuild } from "@/api/build"
     import PageHeader from "@/components/PageHeader/index"
+    import { BuildNow } from "@/api/repository"
 
     export default {
         name      : "Build",
@@ -141,6 +149,32 @@
                         branchId: this.branchId,
                         buildId : buildId
                     }
+                })
+            },
+            del(buildId) {
+                this.$confirm('此操作将永久删除该构建, 是否继续?', '提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText : '取消',
+                    type             : 'warning'
+                }).then(() => {
+                    DeleteBuild(buildId).then(res => {
+                        this.$message({
+                            message : '删除成功',
+                            type    : 'success',
+                            duration: 3 * 1000
+                        })
+                        this.fetchBuilds()
+                    })
+                })
+            },
+            build() {
+                BuildNow(this.repoId, this.branchId).then(res => {
+                    this.$message({
+                        message : '触发成功',
+                        type    : 'success',
+                        duration: 3 * 1000
+                    })
+                    this.fetchBuilds()
                 })
             }
         }

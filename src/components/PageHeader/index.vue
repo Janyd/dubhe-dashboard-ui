@@ -72,6 +72,7 @@
         }
 
         .sub-title {
+            align-self: center;
             font-size: 18px;
         }
 

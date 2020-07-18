@@ -7,3 +7,17 @@ export function Builds(repoId, branchId, page) {
         data  : page
     })
 }
+
+export function DeleteBuild(buildId) {
+    return request({
+        url   : `/build/${buildId}`,
+        method: 'delete'
+    })
+}
+
+export function Steps(buildId) {
+    return request({
+        url   : `/build/steps/${buildId}`,
+        method: 'get'
+    })
+}

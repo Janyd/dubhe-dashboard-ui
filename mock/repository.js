@@ -107,7 +107,7 @@ module.exports = [
     },
     {
         url     : '/repo/build/\\d+/\\d+',
-        method  : 'put',
+        method  : 'post',
         response: (req, res) => {
             return {
                 "code"     : 200000,
