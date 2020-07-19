@@ -56,7 +56,14 @@
                     <el-table-column align="center" prop="event" label="触发事件" />
                     <el-table-column align="center" prop="createdAt" label="构建时长">
                         <template slot-scope="scope">
-                            <span style="margin-left: 10px">{{ scope.row.finishedAt - scope.row.startedAt }}</span>
+                            <span
+                                v-if="scope.row.status === 'success'"
+                            >
+                                {{ scope.row.finishedAt - scope.row.startedAt }}
+                            </span>
+                            <span v-else>
+                                -
+                            </span>
                         </template>
                     </el-table-column>
                     <el-table-column align="center" prop="createdAt" label="创建时间">
@@ -65,7 +72,7 @@
                             <span style="margin-left: 10px">{{ scope.row.createdAt | convertTime }}</span>
                         </template>
                     </el-table-column>
-                    <el-table-column label="操作" min-width="120">
+                    <el-table-column align="center" label="操作" width="120">
                         <template slot-scope="scope">
                             <el-button type="danger" size="mini" @click="del(scope.row.id)">删除</el-button>
                         </template>
