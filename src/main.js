@@ -37,14 +37,14 @@ Vue.use(ElementUI)
 Vue.use(formCreate)
 Vue.use(VueHighlightJS)
 Vue.use(new VueSocketIO({
-    debug: true,
+    debug     : true,
     connection: 'http://localhost:8000',
-    vuex: {
+    vuex      : {
         store,
-        actionPrefix: 'SOCKET_',
+        actionPrefix  : 'SOCKET_',
         mutationPrefix: 'SOCKET_'
     },
-    options: { path: '/api/ws' }
+    options   : { path: '/api/socket.io/', transports: ['websocket'] }
 }))
 
 Vue.config.productionTip = false

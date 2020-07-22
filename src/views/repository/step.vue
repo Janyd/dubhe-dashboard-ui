@@ -5,6 +5,7 @@
                 <page-header sub-title="构建步骤" @back="back">
                     <div slot="content">
                         <el-button class="btn-right" icon="el-icon-refresh" size="mini" @click="fetchSteps" />
+                        <el-button class="btn-right" size="mini" @click="handle">触发</el-button>
                     </div>
                 </page-header>
             </el-col>
@@ -95,6 +96,8 @@
             this.branchId = branchId
             this.buildId = buildId
             this.fetchSteps()
+            console.log(this.sockets)
+            console.log(this.$socket)
         },
         methods: {
             fetchSteps() {
@@ -104,11 +107,19 @@
             },
             back() {
                 this.$router.push({ name: 'build', params: { repoId: this.repoId, branchId: this.branchId } })
+            },
+            handle() {
+                this.$socket.emit('notice', '你好！！', function(data) {
+                    console.log(data)
+                })
             }
         },
         sockets: {
             connect: function() {
                 console.log('socket connected')
+            },
+            reply  : function(data) {
+                console.log(data)
             }
         }
     }
