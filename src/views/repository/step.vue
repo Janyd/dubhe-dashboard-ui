@@ -105,6 +105,11 @@
             back() {
                 this.$router.push({ name: 'build', params: { repoId: this.repoId, branchId: this.branchId } })
             }
+        },
+        sockets: {
+            connect: function() {
+                console.log('socket connected')
+            }
         }
     }
 </script>

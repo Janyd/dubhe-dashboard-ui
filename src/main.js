@@ -15,6 +15,7 @@ import formCreate from "@form-create/element-ui"
 import '@/utils/filter'
 import '@/components/index'
 import 'highlight.js/styles/atom-one-dark.css'
+import VueSocketIO from 'vue-socket.io'
 
 /**
  * If you don't want to use mock-server
@@ -35,6 +36,16 @@ if (process.env.NODE_ENV === 'production') {
 Vue.use(ElementUI)
 Vue.use(formCreate)
 Vue.use(VueHighlightJS)
+Vue.use(new VueSocketIO({
+    debug: true,
+    connection: 'http://localhost:8000',
+    vuex: {
+        store,
+        actionPrefix: 'SOCKET_',
+        mutationPrefix: 'SOCKET_'
+    },
+    options: { path: '/api/ws' }
+}))
 
 Vue.config.productionTip = false
 

@@ -4,8 +4,14 @@
             <el-col :span="24">
                 <page-header title="流水线分支" @back="back">
                     <div slot="content">
-                        <el-button class="btn-right" type="success" plain icon="el-icon-caret-right" @click="build"
-                                   size="small">
+                        <el-button
+                            class="btn-right"
+                            type="success"
+                            plain
+                            icon="el-icon-caret-right"
+                            size="small"
+                            @click="build"
+                        >
                             立即构建
                         </el-button>
                         <el-button class="btn-right" icon="el-icon-refresh" size="small" @click="fetchBuilds">
