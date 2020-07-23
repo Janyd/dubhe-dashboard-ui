@@ -5,7 +5,6 @@
                 <page-header sub-title="构建步骤" @back="back">
                     <div slot="content">
                         <el-button class="btn-right" icon="el-icon-refresh" size="mini" @click="fetchSteps" />
-                        <el-button class="btn-right" size="mini" @click="handle">触发</el-button>
                     </div>
                 </page-header>
             </el-col>
@@ -22,7 +21,7 @@
                 <el-table-column align="center" prop="number" label="序号" width="45" />
                 <el-table-column align="left" prop="name" label="名称" min-width="150">
                     <template slot-scope="scope">
-                        <el-link type="primary">{{ scope.row.name }}</el-link>
+                        <el-link type="primary" @click="logs(scope.row.id)">{{ scope.row.name }}</el-link>
                     </template>
                 </el-table-column>
                 <el-table-column align="center" label="状态">
@@ -96,8 +95,6 @@
             this.branchId = branchId
             this.buildId = buildId
             this.fetchSteps()
-            console.log(this.sockets)
-            console.log(this.$socket)
         },
         methods: {
             fetchSteps() {
@@ -108,18 +105,15 @@
             back() {
                 this.$router.push({ name: 'build', params: { repoId: this.repoId, branchId: this.branchId } })
             },
-            handle() {
-                this.$socket.emit('notice', '你好！！', function(data) {
-                    console.log(data)
+            logs(stepId) {
+                this.$router.push({
+                    name: 'log', params: {
+                        repoId  : this.repoId,
+                        branchId: this.branchId,
+                        buildId : this.buildId,
+                        stepId  : stepId
+                    }
                 })
-            }
-        },
-        sockets: {
-            connect: function() {
-                console.log('socket connected')
-            },
-            reply  : function(data) {
-                console.log(data)
             }
         }
     }

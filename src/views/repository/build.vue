@@ -32,8 +32,6 @@
                     fit
                     highlight-current-row
                     row-key="id"
-                    :expand-row-keys="expands"
-                    @expand-change="handleClick"
                 >
                     <el-table-column align="left" prop="name" label="构建版本" width="150">
                         <template slot-scope="scope">
@@ -119,8 +117,7 @@
                 builds  : [],
                 total   : 0,
                 size    : 10,
-                current : 1,
-                expands : []
+                current : 1
             }
         },
         created() {
@@ -148,12 +145,6 @@
             },
             back() {
                 this.$router.push({ name: 'branches', params: { repoId: this.repoId } })
-            },
-            handleClick(row, expandedRows) {
-                this.expands = []
-                if (expandedRows.length > 0) {
-                    row ? this.expands.push(row.id) : ''
-                }
             },
             step(buildId) {
                 this.$router.push({
