@@ -9,8 +9,8 @@
                 </page-header>
             </el-col>
         </el-row>
-        <div>
-            {{ log }}
+        <div class="log-content">
+            <p v-for="(l, index) in lines" :key="index" class="log">{{ l }}</p>
         </div>
     </div>
 </template>
@@ -26,7 +26,7 @@
                 branchId: '',
                 buildId : '',
                 stepId  : '',
-                log     : ''
+                lines   : []
             }
         },
         created() {
@@ -58,16 +58,18 @@
                 const that = this
                 this.$socket.emit('step:join', JSON.stringify({ stepId: this.stepId }), function(res) {
                     const data = JSON.parse(res)
-                    console.log(data)
                     if (data.code === 200000) {
                         that.sockets.subscribe('step:' + that.stepId, (d) => {
                             const r = JSON.parse(d)
                             const line = r.data
-                            that.log += (line.out + '\n')
+                            that.lines.push(line.out)
                         })
                     } else if (data.code === 300000) {
                         FindLog(that.stepId).then(resp => {
-                            console.log(resp.data)
+                            const lines = JSON.parse(resp.data)
+                            for (let i = 0; i < lines.length; i++) {
+                                that.lines.push(lines[i].out)
+                            }
                         })
                     }
                 })
@@ -82,6 +84,8 @@
     }
 </script>
 
-<style scoped>
-
+<style lang="scss" scoped>
+    .log {
+        line-height: 10px;
+    }
 </style>
