@@ -61,6 +61,9 @@
                     if (data.code === 200000) {
                         that.sockets.subscribe('step:' + that.stepId, (d) => {
                             const r = JSON.parse(d)
+                            if (r.code !== 200000) {
+                                return
+                            }
                             const line = r.data
                             that.lines.push(line.out)
                         })
