@@ -10,8 +10,30 @@
         height: 100%;
     }
 
-    .main-container::-webkit-scrollbar {
-        display: none;
+    .main-container::-webkit-scrollbar {/*滚动条整体样式*/
+
+        width: 6px;     /*高宽分别对应横竖滚动条的尺寸*/
+
+        height: 1px;
+
+    }
+
+    .main-container::-webkit-scrollbar-thumb {/*滚动条里面小方块*/
+        position: relative;
+        display: block;
+        width: 0;
+        height: 0;
+        cursor: pointer;
+        border-radius: 2px;
+        background-color: rgba(144,147,153,.3);
+        transition: background-color .3s;
+    }
+
+    .main-container::-webkit-scrollbar-track {/*滚动条里面轨道*/
+        border-radius: inherit;
+
+        background: transparent;
+
     }
 
 
