@@ -10,7 +10,7 @@
             </el-col>
         </el-row>
         <div class="log-content">
-            <p v-for="(l, index) in lines" :key="index" class="log">{{ l }}</p>
+            <p v-for="(l, index) in lines" :key="index">{{ l }}</p>
         </div>
     </div>
 </template>

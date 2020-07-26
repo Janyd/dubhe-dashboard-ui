@@ -50,8 +50,26 @@
                             <el-tag v-if="scope.row.status === 'running'" size="mini" effect="plain" type="success">
                                 构建中
                             </el-tag>
-                            <el-tag v-if="scope.row.status === 'error'" size="mini" effect="dark" type="danger">错误
-                            </el-tag>
+                            <el-popover
+                                v-if="scope.row.status === 'error'"
+                                width="800"
+                                trigger="hover"
+                            >
+                                <el-alert
+                                    :title="scope.row.error"
+                                    type="error"
+                                    show-icon
+                                    :closable="false"
+                                />
+                                <el-tag
+                                    v-if="scope.row.status === 'error'"
+                                    slot="reference"
+                                    size="mini"
+                                    effect="dark"
+                                    type="danger"
+                                >错误
+                                </el-tag>
+                            </el-popover>
                             <el-tag v-if="scope.row.status === 'skipped'" size="mini" effect="dark" type="info">跳过
                             </el-tag>
                         </template>
